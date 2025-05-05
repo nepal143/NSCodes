@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Function to encrypt a message using Caesar Cipher
+string encrypt(string text, int key) {
+    string result = "";
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = isupper(c) ? 'A' : 'a';
+            result += (c - base + key) % 26 + base;
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+
+// Function to decrypt a message using Caesar Cipher
+string decrypt(string text, int key) {
+    return encrypt(text, 26 - (key % 26)); // Reuse encryption with reverse key
+}
+
+int main() {
+    int choice;
+    string message;
+    int key;
+
+    cout << "==== Caesar Cipher Encryption/Decryption ====" << endl;
+    cout << "1. Encrypt" << endl;
+    cout << "2. Decrypt" << endl;
+    cout << "Enter your choice (1 or 2): ";
+    cin >> choice;
+
+    // Clear input buffer
+    cin.ignore();
+
+    switch (choice) {
+        case 1:
+            cout << "Enter message to encrypt: ";
+            getline(cin, message);
+            cout << "Enter key (number): ";
+            cin >> key;
+            cout << "Encrypted message: " << encrypt(message, key) << endl;
+            break;
+
+        case 2:
+            cout << "Enter message to decrypt: ";
+            getline(cin, message);
+            cout << "Enter key used during encryption: ";
+            cin >> key;
+            cout << "Decrypted message: " << decrypt(message, key) << endl;
+            break;
+
+        default:
+            cout << "Invalid choice. Please run the program again." << endl;
+    }
+
+    return 0;
+}
